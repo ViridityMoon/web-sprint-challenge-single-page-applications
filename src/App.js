@@ -12,7 +12,12 @@ import Form from './Components/Form';
 const initialOrder = {
   name: '',
   size: '',
-  sauce: '',
+  sauce: {
+    originalRed: false,
+    garlicRanch: false,
+    barbecueSauce: false,
+    spinachAlfredo: false,
+  },
   toppings: {
     pepperoni: false,
     sausage: false,
@@ -45,10 +50,12 @@ const App = () => {
   const postNewOrder = newOrder => {
     axios.post('https://reqres.in/api/pizza', newOrder)
       .then(res => {
+        console.log(res.data);
+        // debugger
         setOrder([...order, res.data])
       })
       .catch(err => {
-        debugger
+        // debugger
       })
       .finally(() => {
         setFormValues(initialOrder)
@@ -60,6 +67,16 @@ const App = () => {
     setFormValues({...formValues, 
       toppings: {
         ...formValues.toppings,
+        [name]: checked,
+      }
+    })
+  };
+
+  const onCheckboxChange2 = evt => {
+    const { name, checked } = evt.target;
+    setFormValues({...formValues, 
+      sauce: {
+        ...formValues.sauce,
         [name]: checked,
       }
     })
@@ -77,7 +94,6 @@ const App = () => {
           [name]: ""
         });
       })
-
       .catch(err => {
         setFormErrors({
           ...formErrors,
@@ -85,17 +101,26 @@ const App = () => {
         })
       })
 
-    setFormValues({...value, [name]: value});
+      console.log("name: " + name + " value: " + value)
+
+    setFormValues({...formValues, [name]: value});
+  }
+
+  const onInputChange2 = evt => {
+    const { name, value } = evt.target;
+    console.log("name: " + name + " value: " + value)
+    setFormValues({...formValues, [name]: value});
   }
 
   const onSubmit = evt => {
     evt.preventDefault()
-
+    console.log(formValues);
+    debugger
     const newOrder = {
-      name: formValues.username.trim(),
-      size: formValues.email.trim(),
-      role: formValues.role,
-      sauce: formValues.civil,
+      name: formValues.name.trim(),
+      size: formValues.size.trim(),
+      sauce:  Object.keys(formValues.sauce)
+      .filter(sauceName => (formValues.sauce[sauceName] === true)),
       toppings: Object.keys(formValues.toppings)
         .filter(toppingName => (formValues.toppings[toppingName] === true)),
       substitute: Object.keys(formValues.substitute)
@@ -117,7 +142,7 @@ return (
   <div>
     <Header/>
     <Route exact path='/' render = {props => <HomePage {...props} />} />
-    <Route path='/pizza' render = {props => <Form {...props} onSubmit = {onSubmit} onInputChange = {onInputChange} onCheckboxChange = {onCheckboxChange} disabled = {disabled} formErrors = {formErrors} />} />
+    <Route path='/pizza' render = {props => <Form {...props} onSubmit = {onSubmit} onInputChange = {onInputChange}onInputChange2 = {onInputChange2} onCheckboxChange = {onCheckboxChange} onCheckboxChange2 = {onCheckboxChange2} disabled = {disabled} formValues={formValues} formErrors = {formErrors} />} />
 
   </div>
 );
