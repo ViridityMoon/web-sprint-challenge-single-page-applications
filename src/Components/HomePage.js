@@ -7,6 +7,7 @@ const HomePage = () => {
   return (
     <section className='home-container'>
         <HomePageLander/>
+        <HomePageContent/>
     </section>
   );
 };

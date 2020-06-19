@@ -4,21 +4,26 @@ import React from 'react';
 const Form = (props) => {
     const {
         onInputChange,
-        onCheckboxChange
+        onCheckboxChange,
+        formErrors,
+        onSubmit,
+        disabled,
+        
     } = props
     return (
-        <form>
+        <form onSubmit = {onSubmit}>
             <section className='form-top-content'>
                 <h5>Build Your Own Pizza</h5>
                 <img alt='food'></img>
             </section>
             <section className='name'>
                 <h4>Enter Name Here</h4>
+                <p>{formErrors.name ? formErrors.name : ''}</p>
                 <input type='text' onInputChange = {onInputChange}/>
             </section>
             <section>
                 <label>
-                    <select onDropdownChange={onInputChange}>
+                    <select onChange={onInputChange}>
                         <option>Size</option>
                         <option>Personal</option>
                         <option>Small</option>
@@ -135,7 +140,7 @@ const Form = (props) => {
                         <option>9</option>
                         <option>10</option>
                     </select>
-                <button>Add to Order</button>
+                <button onClick={onSubmit} disabled = {disabled}>Add to Order</button>
             </section>
         </form>
   );
