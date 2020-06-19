@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+import { Link, BrowserRouter as Router } from 'react-router-dom';
 
 
 const Header = () => {
@@ -6,8 +7,12 @@ const Header = () => {
     <header>
         <h1>Lambda Eats</h1>
         <nav>
-            <a href='#'>Home</a>
-            <a href='#'>Help</a>
+            <Router>
+                <Link to='/'>
+                    <p>Home</p>
+                </Link>
+            </Router>
+            <p>Help</p>
         </nav>
     </header>
   );

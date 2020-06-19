@@ -1,11 +1,14 @@
-import React from "react";
+import React from 'react';
+import { Route, Link, Switch, BrowserRouter as Router } from 'react-router-dom';
 
 
 const HomePageLander = () => {
   return (
     <div>
         <h3>Your favorite food, delivered while coding.</h3>
-        <button>Pizza?</button>
+        <Link to='/pizza'>
+          <button>Pizza?</button>
+        </Link>
     </div>
   );
 };
