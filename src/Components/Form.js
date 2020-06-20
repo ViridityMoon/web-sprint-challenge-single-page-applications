@@ -22,7 +22,7 @@ const Form = (props) => {
             <section className='name'>
                 <h4>Enter Name Here</h4>
                 <p>{formErrors.name ? formErrors.name : ''}</p>
-                <input type='text' name='name' onChange = {onInputChange}/>
+                <input className='nameInput'type='text' name='name' onChange = {onInputChange}/>
             </section>
             <section>
                 <label>
